@@ -60,7 +60,7 @@
 
     .hero__inner {
       display: grid;
-      grid-template-columns: 58% 42%;
+      grid-template-columns: 58fr 42fr;
       gap: 52px;
       align-items: center;
     }
@@ -70,7 +70,7 @@
       position: relative;
       border-radius: 18px;
       overflow: hidden;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 1 / 1;
     }
 
     .hero__img-wrap img {
@@ -153,6 +153,53 @@
       transition: opacity 200ms ease;
     }
     .hero__listen:hover { opacity: 0.75; }
+
+    /* ─────────────────────────────────────
+       HERO SLIDER
+    ───────────────────────────────────── */
+    .hero-slider {
+      position: relative;
+    }
+
+    /* trackだけをクリップ。dotsはここに含めない */
+    .hero-slider__viewport {
+      overflow: hidden;
+    }
+
+    .hero-slider__track {
+      display: flex;
+      transition: transform 520ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    .hero-slider__slide {
+      flex: 0 0 auto;
+    }
+
+    .hero-slider__dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding-top: 28px;
+    }
+
+    .hero-slider__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 220ms ease, transform 220ms ease;
+      flex-shrink: 0;
+    }
+
+    .hero-slider__dot.is-active {
+      background: var(--c1);
+      transform: scale(1.4);
+    }
 
     /* ─────────────────────────────────────
        NAVIGATION
@@ -710,24 +757,24 @@
        ANIMATIONS
     ───────────────────────────────────── */
 
-    /* ページロード時 — ヒーロー */
-    .hero__img-wrap {
+    /* ページロード時 — ヒーロー（最初のスライドのみ） */
+    .hero-slider__slide:first-child .hero__img-wrap {
       opacity: 0;
       transform: scale(1.04);
       transition: opacity 900ms ease-out, transform 900ms ease-out;
     }
-    .hero__img-wrap.is-loaded {
+    .hero-slider__slide:first-child .hero__img-wrap.is-loaded {
       opacity: 1;
       transform: scale(1);
     }
 
-    .hero__info {
+    .hero-slider__slide:first-child .hero__info {
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 650ms ease, transform 650ms ease;
       transition-delay: 220ms;
     }
-    .hero__info.is-loaded {
+    .hero-slider__slide:first-child .hero__info.is-loaded {
       opacity: 1;
       transform: none;
     }
@@ -762,7 +809,6 @@
         grid-template-columns: 1fr;
         gap: 32px;
       }
-      .hero__img-wrap { aspect-ratio: 4 / 3; }
       .hero__title { font-size: 42px; }
 
       .nav__list {
@@ -812,30 +858,89 @@
   ══════════════════════════════════ -->
   <section id="top" class="hero">
     <div class="container">
-      <div class="hero__inner">
+      <div class="hero-slider">
 
-        <div class="hero__img-wrap">
-          <img src="images/Akane-1.png" alt="Akane">
+        <!-- trackだけをクリップ。dotsはviewportの外に置く -->
+        <div class="hero-slider__viewport">
+          <div class="hero-slider__track" id="heroTrack">
+
+            <!-- ── Slide 1: 3rd Single ── -->
+            <div class="hero-slider__slide">
+              <div class="hero__inner">
+                <div class="hero__img-wrap">
+                  <img src="images/Akane-2.png" alt="君のいない朝">
+                </div>
+                <div class="hero__info">
+                  <p class="hero__label">3rd Single — Now Streaming</p>
+                  <h1 class="hero__title">君のいない朝</h1>
+                  <p class="hero__meta">
+                    2026.05.19 Distribution Start<br>
+                    23 Platforms Worldwide
+                  </p>
+                  <div class="hero__rule"></div>
+                  <a href="https://www.youtube.com/watch?v=6_kzWuMgTcw" target="_blank" rel="noopener noreferrer" class="hero__listen">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    Listen Now
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Slide 2: 2nd Single ── -->
+            <div class="hero-slider__slide">
+              <div class="hero__inner">
+                <div class="hero__img-wrap">
+                  <img src="images/Akane-1.png" alt="透明な光">
+                </div>
+                <div class="hero__info">
+                  <p class="hero__label">2nd Single — Now Streaming</p>
+                  <h1 class="hero__title">透&thinsp;明&thinsp;な&thinsp;光</h1>
+                  <p class="hero__meta">
+                    2026.05.11 Distribution Start<br>
+                    23 Platforms Worldwide
+                  </p>
+                  <div class="hero__rule"></div>
+                  <a href="https://www.youtube.com/watch?v=BPRjUBG_guI" target="_blank" rel="noopener noreferrer" class="hero__listen">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    Listen Now
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Slide 3: 1st Single ── -->
+            <div class="hero-slider__slide">
+              <div class="hero__inner">
+                <div class="hero__img-wrap">
+                  <img src="images/Akane-0.png" alt="模倣犯">
+                </div>
+                <div class="hero__info">
+                  <p class="hero__label">1st Single — Now Streaming</p>
+                  <h1 class="hero__title">模&thinsp;倣&thinsp;犯</h1>
+                  <p class="hero__meta">
+                    2026.05.03 Distribution Start<br>
+                    23 Platforms Worldwide
+                  </p>
+                  <div class="hero__rule"></div>
+                  <a href="https://www.youtube.com/watch?v=RGfEnvxSmOs" target="_blank" rel="noopener noreferrer" class="hero__listen">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    Listen Now
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /hero-slider__track -->
+        </div><!-- /hero-slider__viewport -->
+
+        <!-- ドットインジケーター（viewportの外 → クリップされない） -->
+        <div class="hero-slider__dots" id="heroDots">
+          <button class="hero-slider__dot is-active" data-slide="0" aria-label="スライド 1"></button>
+          <button class="hero-slider__dot"           data-slide="1" aria-label="スライド 2"></button>
+          <button class="hero-slider__dot"           data-slide="2" aria-label="スライド 3"></button>
         </div>
 
-        <div class="hero__info">
-          <p class="hero__label">2nd Single — Now Streaming</p>
-          <h1 class="hero__title">透&thinsp;明&thinsp;な&thinsp;光</h1>
-          <p class="hero__meta">
-            2026.05.11 Distribution Start<br>
-            23 Platforms Worldwide
-          </p>
-          <div class="hero__rule"></div>
-          <ul class="hero__tracks">
-            <li>01．透明な光</li>
-          </ul>
-          <a href="https://www.youtube.com/watch?v=BPRjUBG_guI" target="_blank" rel="noopener noreferrer" class="hero__listen">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-            Listen Now
-          </a>
-        </div>
-
-      </div>
+      </div><!-- /hero-slider -->
     </div>
   </section>
 
@@ -867,11 +972,16 @@
 
       <ul class="news__list">
         <li class="news__item reveal" data-delay="0">
+          <span class="news__date">2026.05.19</span>
+          <span class="badge badge--release">Release</span>
+          <span class="news__text">3rd Single「君のいない朝」23のサービスで配信スタート🎉</span>
+        </li>
+        <li class="news__item reveal" data-delay="60">
           <span class="news__date">2026.05.11</span>
           <span class="badge badge--release">Release</span>
           <span class="news__text">2nd Single「透明な光」23のサービスで配信スタート🎉</span>
         </li>
-        <li class="news__item reveal" data-delay="60">
+        <li class="news__item reveal" data-delay="120">
           <span class="news__date">2026.05.03</span>
           <span class="badge badge--release">Release</span>
           <span class="news__text">1st Single「模倣犯」23のサービスで配信スタート🎉</span>
@@ -1005,8 +1115,40 @@
 
       <div class="works__grid">
 
-        <!-- 透明な光 YouTube Music Video -->
+        <!-- 君のいない朝 YouTube Music Video -->
         <div class="reveal" data-delay="0">
+          <p class="work-card__label">Music Video — 3rd Single</p>
+          <p class="work-card__title">君のいない朝</p>
+          <div class="work-thumb" style="aspect-ratio:16/9; border-radius:8px; overflow:hidden;">
+            <iframe
+              src="https://www.youtube.com/embed/6_kzWuMgTcw"
+              title="朱音「君のいない朝にだけ光る星」Music Video"
+              width="100%" height="100%"
+              style="border:0; display:block;"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- 君のいない朝 TikTok Short Video -->
+        <div class="reveal" data-delay="80">
+          <p class="work-card__label">Short Video — 3rd Single</p>
+          <p class="work-card__title">君のいない朝</p>
+          <div class="tiktok-wrap">
+            <blockquote
+              class="tiktok-embed"
+              cite="https://www.tiktok.com/@aka.ne.music/video/7641348315220692245"
+              data-video-id="7641348315220692245"
+              style="max-width:325px; min-width:325px;">
+              <section></section>
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- 透明な光 YouTube Music Video -->
+        <div class="reveal" data-delay="150">
           <p class="work-card__label">Music Video — 2nd Single</p>
           <p class="work-card__title">透明な光</p>
           <div class="work-thumb" style="aspect-ratio:16/9; border-radius:8px; overflow:hidden;">
@@ -1022,23 +1164,8 @@
           </div>
         </div>
 
-        <!-- 透明な光 TikTok Short Video -->
-        <div class="reveal" data-delay="100">
-          <p class="work-card__label">Short Video — 2nd Single</p>
-          <p class="work-card__title">透明な光</p>
-          <div class="tiktok-wrap">
-            <blockquote
-              class="tiktok-embed"
-              cite="https://www.tiktok.com/@aka.ne.music/video/7638146538291727636"
-              data-video-id="7638146538291727636"
-              style="max-width:325px; min-width:325px;">
-              <section></section>
-            </blockquote>
-          </div>
-        </div>
-
         <!-- 模倣犯 YouTube Music Video -->
-        <div class="reveal" data-delay="150">
+        <div class="reveal" data-delay="280">
           <p class="work-card__label">Music Video — 1st Single</p>
           <p class="work-card__title">模倣犯</p>
           <div class="work-thumb" style="aspect-ratio:16/9; border-radius:8px; overflow:hidden;">
@@ -1070,6 +1197,17 @@
       </div>
 
       <div class="disc__card reveal" style="margin-bottom: 36px;">
+        <img class="disc__jacket" src="images/Akane-2.png" alt="君のいない朝にだけ光る星 ジャケット" style="object-position:center center;">
+        <div class="disc__info">
+          <p class="disc__label">3rd Single</p>
+          <h3 class="disc__title">君のいない朝</h3>
+          <p class="disc__meta">
+            2026.05.19 Distribution Start &nbsp;/&nbsp; 23 Platforms
+          </p>
+        </div>
+      </div>
+
+      <div class="disc__card reveal" style="margin-bottom: 36px;">
         <img class="disc__jacket" src="images/Akane-1.png" alt="透明な光 ジャケット">
         <div class="disc__info">
           <p class="disc__label">2nd Single</p>
@@ -1077,9 +1215,6 @@
           <p class="disc__meta">
             2026.05.11 Distribution Start &nbsp;/&nbsp; 23 Platforms
           </p>
-          <div class="disc__tracks">
-            <span>01．透明な光</span>
-          </div>
         </div>
       </div>
 
@@ -1091,9 +1226,6 @@
           <p class="disc__meta">
             2026.05.03 Distribution Start &nbsp;/&nbsp; 23 Platforms
           </p>
-          <div class="disc__tracks">
-            <span>01．模倣犯</span>
-          </div>
         </div>
       </div>
 
@@ -1112,7 +1244,7 @@
             <h2 class="section__title">Contact</h2>
           </div>
           <p class="footer__contact-body">
-            お仕事のご依頼などのお問い合わせは、こちらからどうぞ。
+            お問い合わせは、こちらからどうぞ。
           </p>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXoPKFfg92XhWMCniRnAg7fnJFBnnixAe2e3WR916RNHiGjA/viewform?usp=header" target="_blank" rel="noopener noreferrer" class="btn">Contact Form <span class="btn__arrow">——→</span></a>
         </div>
@@ -1159,10 +1291,69 @@
   <script>
     /* ── ページロードアニメーション ── */
     window.addEventListener('load', () => {
-      document.querySelector('.hero__img-wrap').classList.add('is-loaded');
-      document.querySelector('.hero__info').classList.add('is-loaded');
+      document.querySelector('.hero-slider__slide:first-child .hero__img-wrap').classList.add('is-loaded');
+      document.querySelector('.hero-slider__slide:first-child .hero__info').classList.add('is-loaded');
       document.getElementById('site-nav').classList.add('is-loaded');
     });
+
+    /* ── Hero Slider ── */
+    (function () {
+      const viewport = document.querySelector('.hero-slider__viewport');
+      const track    = document.getElementById('heroTrack');
+      const slides   = document.querySelectorAll('.hero-slider__slide');
+      const dots     = document.querySelectorAll('.hero-slider__dot');
+      const total    = slides.length;
+      let current    = 0;
+      let startX     = 0;
+      let startTime  = 0;
+      let mouseDown  = false;
+
+      /* スライド幅をviewportの実際のpx幅で明示設定 */
+      function setSize() {
+        const w = viewport.offsetWidth;
+        slides.forEach(s => { s.style.width = w + 'px'; });
+        goTo(current, false); /* サイズ変更後に位置を再計算（アニメなし） */
+      }
+
+      function goTo(index, animate) {
+        current = ((index % total) + total) % total;
+        const w = viewport.offsetWidth;
+        if (animate === false) {
+          track.style.transition = 'none';
+        } else {
+          track.style.transition = 'transform 520ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }
+        track.style.transform = `translateX(-${current * w}px)`;
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+      }
+
+      setSize();
+      window.addEventListener('resize', () => setSize(), { passive: true });
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => goTo(parseInt(dot.dataset.slide, 10), true));
+      });
+
+      /* タッチスワイプ */
+      track.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX; startTime = Date.now();
+      }, { passive: true });
+      track.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40 && Date.now() - startTime < 400) {
+          goTo(diff > 0 ? current + 1 : current - 1, true);
+        }
+      }, { passive: true });
+
+      /* マウスドラッグ（PC） */
+      track.addEventListener('mousedown', e => { mouseDown = true; startX = e.clientX; startTime = Date.now(); });
+      window.addEventListener('mouseup', e => {
+        if (!mouseDown) return;
+        mouseDown = false;
+        const diff = startX - e.clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1, true);
+      });
+    })();
 
     /* ── スクロール連動フェードアップ ── */
     const revealEls = document.querySelectorAll('.reveal');
